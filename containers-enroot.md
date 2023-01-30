@@ -61,14 +61,15 @@ Make sure to seperate the mount points with commas. If you want to mount files i
 
 ```bash
 $ salloc -p accelerated -t 1:00:00 --gres=gpu:1 \
---container-image=nvcr.io/nvidia/pytorch:22.12-py3 \
---container-name=name-of-your-container \
+--container-name=name-of-your-container \  # NOTE: this must be WITHOUT "pyxis_"
 --container-mounts=/etc/slurm/task_prolog.hk:/etc/slurm/task_prolog.hk,/scratch:/scratch \
 --container-mount-home \
 --container-writable \
 $ cd go/to/your/code
 $ python
 ```
+NOTE: notice that there is no `pyxis_` in front of the container name. this is on purpose!!
+Also, if you use the `--container-image=nvcr.io/nvidia/pytorch:22.12-py3` flag, this may download a fresh version of a container.
 
 #### example sbatch header
 
