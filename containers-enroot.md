@@ -87,8 +87,8 @@ Also, if you use the `--container-image=nvcr.io/nvidia/pytorch:22.12-py3` flag, 
 #SBATCH --container-mounts=/etc/slurm/task_prolog.hk:/etc/slurm/task_prolog.hk,/scratch:/scratch,/YOUR/MOUNT/POINTS
 ```
 
-#### Notes
+# Notes
 - there should be no spaces between mount points
 - if no path for the container FS is specified, it will be mounted with the same path
 - `enroot` will throw errors if it expects GPUs to exist on a node and there are none. There is probably a way to fix this, but at the moment it crashes. To avoid this, allocate a GPU node.
-
+- commands like `squeue` are not available within a container
