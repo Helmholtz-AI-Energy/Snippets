@@ -1,5 +1,7 @@
 # How to use HPC containers (enroot)
 
+This is all based on a talk from [JuanPedroGHM](https://github.com/JuanPedroGHM)
+
 ## 1. Create container
 
 ```bash
