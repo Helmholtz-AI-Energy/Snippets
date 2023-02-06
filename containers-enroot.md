@@ -2,10 +2,10 @@
 
 This is all based on a talk from [JuanPedroGHM](https://github.com/JuanPedroGHM)
 
-## 1. Create container
+## 1. Create SquashFS
 
 ```bash
-enroot create -n pyxis_name-of-your-container file-from-last-step.sqsh
+enroot import docker://nvcr.io#nvidia/tensorflow:20.12-tf1-py3
 ```
 
 If you have get unauthorized issues, you may need to get an API key from NVIDAI. To solve them,
