@@ -87,6 +87,48 @@ Also, if you use the `--container-image=nvcr.io/nvidia/pytorch:22.12-py3` flag, 
 #SBATCH --container-mounts=/etc/slurm/task_prolog.hk:/etc/slurm/task_prolog.hk,/scratch:/scratch,/YOUR/MOUNT/POINTS
 ```
 
+### sbatch + srun
+
+For distributed jobs, I have found that its easiest to use `srun` to manage the container. I use this:
+
+```bash
+#!/usr/bin/env bash
+
+# Slurm job configuration
+#SBATCH --nodes=8
+#SBATCH --ntasks-per-node=4
+#SBATCH --gres=gpu:4
+#SBATCH --time=02:00:00
+#SBATCH --job-name=qr-opt-ddp
+#SBATCH --partition=accelerated
+#SBATCH --account=haicore-project-scc
+#SBATCH --output="/hkfs/work/workspace/scratch/qv2382-dlrt/DLRT/logs/slurm-%j"
+
+ml purge
+
+BASE_DIR="/hkfs/work/workspace/scratch/id-NNNN-ws-name/"
+export EXT_DATA_PREFIX="/hkfs/home/dataset/datasets/"
+
+export TOMOUNT='/etc/slurm/task_prolog.hk:/etc/slurm/task_prolog.hk,'
+TOMOUNT+="${EXT_DATA_PREFIX},"
+TOMOUNT+="${BASE_DIR},"
+TOMOUNT+="/scratch,/tmp,/usr/bin/srun:/usr/bin/srun"
+
+SRUN_PARAMS=(
+  --mpi="pmi2"
+  --gpus-per-task=1
+  --cpus-per-task="19"
+  --gpu-bind="closest"
+  --label
+  --container-name=torch \
+  --container-mounts="${TOMOUNT}" \
+  --container-mount-home \
+  --container-writable
+)
+
+srun "${SRUN_PARAMS[@]}" bash -c "python -u ${SCRIPT_DIR}DLRT/networks/qr_cnn.py --config ${CONFIGS}imagenet.yaml"
+```
+
 # Notes
 - there should be no spaces between mount points
 - if no path for the container FS is specified, it will be mounted with the same path
