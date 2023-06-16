@@ -5,7 +5,7 @@ This is all based on a talk from [JuanPedroGHM](https://github.com/JuanPedroGHM)
 ## 1. Create SquashFS
 
 ```bash
-enroot import docker://nvcr.io#nvidia/pytorch:23.01-py3
+enroot import docker://nvcr.io#nvidia/pytorch:23.05-py3
 ```
 
 If you have get unauthorized issues, you may need to get an API key from NVIDAI. To solve them,
