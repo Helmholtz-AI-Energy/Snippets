@@ -46,3 +46,20 @@ if { $system == "horeka"} {
 
 }
 ```
+
+# Sharing a Workspace
+It is recommended to use ACLs via `setfacl` not `chmod` to grant other users access to a workspace.  
+To grant user `ab1234` access to the workspace `my_workspace` use:
+
+For **read only** access:
+```
+setfacl -Rm u:ab1234:rX,d:u:ab1234:rX $(ws_find my_workspace)
+```
+
+For **read and write** access:
+```
+setfacl -Rm u:ab1234:rwX,d:u:ab1234:rwX $(ws_find my_workspace)
+```
+When granting individual write access, it might be necessary to **set ACLs for your own user first** to be able to access the files of your co-workers.
+
+For more information, see also: https://wiki.bwhpc.de/e/Workspace#Sharing_Workspace_Data_within_your_Workgroup
