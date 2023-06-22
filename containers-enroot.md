@@ -134,3 +134,17 @@ srun "${SRUN_PARAMS[@]}" bash -c "python -u ${SCRIPT_DIR}DLRT/networks/qr_cnn.py
 - if no path for the container FS is specified, it will be mounted with the same path
 - `enroot` will throw errors if it expects GPUs to exist on a node and there are none. There is probably a way to fix this, but at the moment it crashes. To avoid this, allocate a GPU node.
 - commands like `squeue` are not available within a container
+
+## Using `enroot` on a node without GPUs
+
+If starting the container hits this error:
+```
+[WARN] Kernel module nvidia_uvm is not loaded. Make sure the NVIDIA device driver is installed and loaded.
+nvidia-container-cli: initialization error: load library failed: libnvidia-ml.so.1: cannot open shared object file: no such file or directory
+```
+It means that its looking to load some NVIDIA drivers which are not there. To avoid this issue use this:
+```
+enroot start -e NVIDIA_VISIBLE_DEVICES=void pyxis_torch
+```
+
+This will disable GPUs, but it will enable running the container in a location which does not have GPUs
