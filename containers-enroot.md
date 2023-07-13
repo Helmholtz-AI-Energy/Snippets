@@ -148,3 +148,12 @@ enroot start -e NVIDIA_VISIBLE_DEVICES=void pyxis_torch
 ```
 
 This will disable GPUs, but it will enable running the container in a location which does not have GPUs
+
+## Installing mpi4py in Horeka/Haicore inside of enroot container.
+
+Make sure to purge the modules from the system, otherwise the environmental variables will mess with the container and it will try to find the compiler and MPI installation from the Horeka/Haicore. 
+
+Cmd to clear environment:
+```
+ml purge
+```
