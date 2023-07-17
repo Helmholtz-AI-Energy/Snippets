@@ -35,17 +35,24 @@ salloc --partition=cpuonly -A haicore-project-scc -N 1 --time 1:00:00
 srun enroot import docker://nvcr.io#nvidia/pytorch:22.12-py3
 ```
 	
-## 2. Create a Container FS (enroot)
+## 2. Create a Container FS (enroot) - Optional
 
 ```bash
 $ enroot create -n pyxis_name-of-your-container file-from-last-step.sqsh
 ```
+Enroot can also use sqsh files for running.
 
 ## 3. Start enroot container:
 
 ```bash
 $ enroot start --rw -m $PWD:/work pyxis_name-of-your-container
 ```
+Alternative without Step 2:
+```bash
+$ enroot start --rw -m $PWD:/work --container-image file-from-step-1.sqsh
+```
+
+
 This will start the container in read-write mode and mount the current working directory (`$PWD`) as `/work` within the container.
 
 This will drop you into a new shell which is inside the container. Here you can run things like `pip install -r requirements.txt` to set up your project.
@@ -55,16 +62,21 @@ This will drop you into a new shell which is inside the container. Here you can 
 SLURM makes it easy to get started by handling importing the image and creating the container on an
 interactive session (requires the pyxis plugin, ask your sysadmin if this exists).
 
-If a directory is not mounted into the container, it will NOT be visible!
+:exclamation::exclamation: If a directory is not mounted into the container, it will NOT be visible!
 Make sure to seperate the mount points with commas. If you want to mount files into the container at a specified path, seperate them with a comma, i.e.
 `/path/on/normal/filessystem:/path/to/files/as/shown/within/the/container,/another/mount/point'
 
 ```bash
 $ salloc -p accelerated -t 1:00:00 --gres=gpu:1 \
---container-name=name-of-your-container \  # NOTE: this must be WITHOUT "pyxis_"
---container-mounts=/etc/slurm/task_prolog.hk:/etc/slurm/task_prolog.hk,/scratch:/scratch \
---container-mount-home \
---container-writable \
+[  # remove this and choose between one of the following:
+    --container-name=name-of-your-container \  # NOTE: this must be WITHOUT "pyxis_"
+    --container-image=file-from-step-1.sqsh \  # only keep 1 of these!!!
+]  # remove this bracket
+[  # add mount points then remove brackets!!
+    --container-mounts=/etc/slurm/task_prolog.hk:/etc/slurm/task_prolog.hk,/scratch:/scratch,/YOUR/DIRECTORY/HERE \
+]  # remove this bracket when ready
+  --container-mount-home \
+  --container-writable \
 $ cd go/to/your/code
 $ python
 ```
