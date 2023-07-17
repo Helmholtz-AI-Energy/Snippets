@@ -64,7 +64,7 @@ interactive session (requires the pyxis plugin, ask your sysadmin if this exists
 
 :exclamation::exclamation: If a directory is not mounted into the container, it will NOT be visible!
 Make sure to seperate the mount points with commas. If you want to mount files into the container at a specified path, seperate them with a comma, i.e.
-`/path/on/normal/filessystem:/path/to/files/as/shown/within/the/container,/another/mount/point'
+`/path/on/normal/filessystem:/path/to/files/as/shown/within/the/container,/another/mount/point`
 
 ```bash
 $ salloc -p accelerated -t 1:00:00 --gres=gpu:1 \
