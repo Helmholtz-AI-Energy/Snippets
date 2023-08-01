@@ -142,6 +142,7 @@ srun "${SRUN_PARAMS[@]}" bash -c "python -u ${SCRIPT_DIR}DLRT/networks/qr_cnn.py
 ```
 
 # Notes
+:exclamation::exclamation: Make sure to use the created container instead of the sqsh-file for multi node srun. Otherwise each node will create it's own container
 - there should be no spaces between mount points
 - if no path for the container FS is specified, it will be mounted with the same path
 - `enroot` will throw errors if it expects GPUs to exist on a node and there are none. There is probably a way to fix this, but at the moment it crashes. To avoid this, allocate a GPU node.
