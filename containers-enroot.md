@@ -136,6 +136,7 @@ SRUN_PARAMS=(
   --container-mounts="${TOMOUNT}" \
   --container-mount-home \
   --container-writable
+  --no-container-entrypoint
 )
 
 srun "${SRUN_PARAMS[@]}" bash -c "python -u ${SCRIPT_DIR}DLRT/networks/qr_cnn.py --config ${CONFIGS}imagenet.yaml"
