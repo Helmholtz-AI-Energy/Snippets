@@ -148,6 +148,7 @@ srun "${SRUN_PARAMS[@]}" bash -c "python -u ${SCRIPT_DIR}DLRT/networks/qr_cnn.py
 - if no path for the container FS is specified, it will be mounted with the same path
 - `enroot` will throw errors if it expects GPUs to exist on a node and there are none. There is probably a way to fix this, but at the moment it crashes. To avoid this, allocate a GPU node.
 - commands like `squeue` are not available within a container
+- no-container-entrypoint is needed in srun_params for multi node srun
 
 ## Using `enroot` on a node without GPUs
 
