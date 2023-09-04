@@ -1,7 +1,8 @@
 """
 Here is a move advanced script for generating torch process groups. 
 
-mpi4py is required, for standard init, it could be removed if one uses the SLURM os files to get the hostname of rank 0.
+mpi4py is required for standard init, it could be removed if one uses the SLURM os files to get the hostname of rank 0.
+if MPI is removed, one needs to grab the available GPUs and the comm rank from somewhere else.
 
 How to use: standard HPC+SLURM case:
 init(method="nccl-slurm")
