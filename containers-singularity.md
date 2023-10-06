@@ -23,23 +23,6 @@ This walkthough will use a PyTorch image from NVIDIA.
 singularity build torch.sif docker://nvcr.io/nvidia/FIX/LINK/pytorch:23.09-py3
 ```
 
----
-
-The catalogue of available Nvidia NGC containers can be consulted here: https://ngc.nvidia.com/catalog/containers. To import (pull if using docker terminology) these containers you need an API key, which is associated to your Nvidia NGC account. You can generate your API key here: https://ngc.nvidia.com/setup/api-key. For the rest of this section, let us refer to your generated API key as <API_KEY>. "
-
-To configure Enroot for using your API key, create the file enroot/.credentials within your $HOME and append the following line to it:
-
-```bash
-machine nvcr.io login $oauthtoken password <API_KEY>
-```
-where <API_KEY> is the key generated as described above. 
-
-After doing this, you can import containers from Nvidia NGC. For example, the latest tensorflow container can be imported as indicated below. 
-```
-$ enroot import docker://nvcr.io#nvidia/pytorch:23.01-py3
-```
----
-
 I have had issues with caches and have needed to allocate a CPU node to do this:
 ```bash
 salloc --partition=cpuonly -A haicore-project-scc -N 1 --time 1:00:00 
