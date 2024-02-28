@@ -172,3 +172,13 @@ Cmd to clear environment:
 ```
 ml purge
 ```
+
+# TLDR
+
+- get container: `enroot import docker://nvcr.io#nvidia/pytorch:23.09-py3`
+- list contianer for enroot with "pyxis_" prepend: `enroot create -n pyxis_name-of-your-container file-from-last-step.sqsh`
+- start container to install packages: `enroot start -e NVIDIA_VISIBLE_DEVICES=void -m /DIR/TO/MOUNT/ --rw pyxis_name`
+- setup scripts and such
+- if switching to singularity:
+  1. `enroot export --output=output.tar container_name`
+  2. `singularity build singularity_container_name.sif output.tar`
